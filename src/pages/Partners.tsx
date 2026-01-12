@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const Partners = () => {
-  const referralLink = "t.me/PassiveCapitalBot/play?start=ref123456";
+  const referralLink = "https://t.me/pasivInvst";
   const [copied, setCopied] = useState(false);
 
   const stats = {
