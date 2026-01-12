@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const Partners = () => {
-  const referralLink = "https://t.me/pasivInvst";
+  const referralLink = "https://t.me/passivInvestbot";
   const [copied, setCopied] = useState(false);
 
   const stats = {
@@ -132,9 +132,13 @@ const Partners = () => {
             className="w-full h-12 bg-secondary hover:bg-secondary/90 font-semibold"
             size="lg"
             onClick={() => {
-              const text = `Присоединяйся к Passive Invest и получай пассивный доход!\n${referralLink}`;
-              if (navigator.share) {
-                navigator.share({ title: 'Passive Invest', text });
+              const text = `Присоединяйся к Passive Invest и получай пассивный доход! ${referralLink}`;
+              if (window.Telegram?.WebApp) {
+                window.Telegram.WebApp.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent('Присоединяйся к Passive Invest и получай пассивный доход!')}`);
+              } else if (navigator.share) {
+                navigator.share({ title: 'Passive Invest', text, url: referralLink }).catch(() => {
+                  window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent('Присоединяйся к Passive Invest и получай пассивный доход!')}`, '_blank');
+                });
               } else {
                 window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent('Присоединяйся к Passive Invest и получай пассивный доход!')}`, '_blank');
               }
