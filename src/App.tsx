@@ -9,6 +9,7 @@ import Portfolio from "./pages/Portfolio";
 import Wallet from "./pages/Wallet";
 import Bonuses from "./pages/Bonuses";
 import Partners from "./pages/Partners";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
 
@@ -30,6 +31,7 @@ const App = () => {
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/bonuses" element={<Bonuses />} />
               <Route path="/partners" element={<Partners />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />

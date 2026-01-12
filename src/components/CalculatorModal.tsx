@@ -14,16 +14,16 @@ const CalculatorModal = ({ open, onClose }: CalculatorModalProps) => {
   const [amount, setAmount] = useState("10000");
   const [days, setDays] = useState("30");
 
-  const baseRate = 9.6;
-  const premiumRate = 11.4;
+  const dailyRate = 10;
+  const premiumDailyRate = 11;
   const premiumThreshold = 100000;
 
   const calculateProfit = () => {
     const investAmount = parseFloat(amount) || 0;
     const period = parseInt(days) || 0;
-    const rate = investAmount >= premiumThreshold ? premiumRate : baseRate;
+    const rate = investAmount >= premiumThreshold ? premiumDailyRate : dailyRate;
     
-    const dailyProfit = (investAmount * rate) / 100 / 365;
+    const dailyProfit = (investAmount * rate) / 100;
     const totalProfit = dailyProfit * period;
     const totalAmount = investAmount + totalProfit;
 
@@ -107,7 +107,7 @@ const CalculatorModal = ({ open, onClose }: CalculatorModalProps) => {
               <p className="text-xs flex items-center gap-2">
                 <Icon name="TrendingUp" size={14} className="text-secondary" />
                 <span className="text-secondary font-medium">
-                  Повышенная ставка {premiumRate}% активна!
+                  Повышенная ставка {premiumDailyRate}% в день активна!
                 </span>
               </p>
             </Card>
@@ -115,7 +115,7 @@ const CalculatorModal = ({ open, onClose }: CalculatorModalProps) => {
 
           <div className="bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/30 rounded-lg p-5 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-primary/20">
-              <span className="text-sm text-muted-foreground">Годовая ставка</span>
+              <span className="text-sm text-muted-foreground">Дневная ставка</span>
               <span className="text-xl font-bold text-primary">{result.rate}%</span>
             </div>
 
@@ -147,8 +147,7 @@ const CalculatorModal = ({ open, onClose }: CalculatorModalProps) => {
             <p className="text-xs text-muted-foreground flex items-start gap-2">
               <Icon name="Info" size={14} className="mt-0.5 flex-shrink-0" />
               <span>
-                Расчёт примерный. Реальная доходность зависит от времени создания депозита и
-                рыночных условий.
+                Доходность {dailyRate}% в день, для депозитов от 100 000 ₽ — {premiumDailyRate}% в день.
               </span>
             </p>
           </div>

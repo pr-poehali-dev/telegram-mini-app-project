@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
 import CalculatorModal from "@/components/CalculatorModal";
+import AddToDepositModal from "@/components/AddToDepositModal";
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState<"active" | "completed">("active");
@@ -11,6 +12,8 @@ const Portfolio = () => {
   const [activeCount] = useState(1);
   const [dailyIncome] = useState(9.6);
   const [showCalculator, setShowCalculator] = useState(false);
+  const [showAddToDeposit, setShowAddToDeposit] = useState(false);
+  const availableBalance = 3.49;
 
   const activeTariff = {
     id: 1,
@@ -64,7 +67,7 @@ const Portfolio = () => {
               <Icon name="TrendingUp" size={24} className="text-secondary" />
             </div>
             <div>
-              <h3 className="font-semibold text-base">Повышенная ставка 11.4%</h3>
+              <h3 className="font-semibold text-base">Повышенная ставка 11% в день</h3>
               <p className="text-xs text-muted-foreground">Действует для депозитов от 100 000 ₽</p>
             </div>
           </div>
@@ -142,7 +145,10 @@ const Portfolio = () => {
               </div>
             </div>
 
-            <Button className="w-full h-12 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-semibold">
+            <Button 
+              className="w-full h-12 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-semibold"
+              onClick={() => setShowAddToDeposit(true)}
+            >
               <Icon name="Plus" size={18} className="mr-2" />
               Добавить к депозиту
             </Button>
@@ -168,6 +174,13 @@ const Portfolio = () => {
       </main>
 
       <CalculatorModal open={showCalculator} onClose={() => setShowCalculator(false)} />
+      <AddToDepositModal 
+        open={showAddToDeposit} 
+        onClose={() => setShowAddToDeposit(false)}
+        depositId={activeTariff.id}
+        depositName={activeTariff.name}
+        availableBalance={availableBalance}
+      />
     </div>
   );
 };
