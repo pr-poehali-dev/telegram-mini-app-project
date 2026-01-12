@@ -2,8 +2,12 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Icon from "@/components/ui/icon";
+import { toast } from "sonner";
 
 const Bonuses = () => {
+  const botLink = "https://t.me/PassiveCapitalBot";
+  const referralLink = "https://t.me/PassiveCapitalBot/play?start=ref123456";
+
   const tasks = [
     {
       id: 1,
@@ -14,6 +18,7 @@ const Bonuses = () => {
       icon: "Send",
       iconBg: "bg-primary/20",
       iconColor: "text-primary",
+      link: botLink,
     },
     {
       id: 2,
@@ -26,8 +31,16 @@ const Bonuses = () => {
       icon: "Users",
       iconBg: "bg-secondary/20",
       iconColor: "text-secondary",
+      link: referralLink,
     },
   ];
+
+  const handleCheck = (taskId: number) => {
+    toast.info("Проверка выполнения задания...");
+    setTimeout(() => {
+      toast.error("Задание еще не выполнено");
+    }, 1500);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -113,10 +126,17 @@ const Bonuses = () => {
                       )}
                       
                       <div className="grid grid-cols-2 gap-2">
-                        <Button variant="outline" className="h-11">
+                        <Button 
+                          variant="outline" 
+                          className="h-11"
+                          onClick={() => handleCheck(task.id)}
+                        >
                           Проверить
                         </Button>
-                        <Button className="h-11 bg-secondary hover:bg-secondary/90 font-semibold">
+                        <Button 
+                          className="h-11 bg-secondary hover:bg-secondary/90 font-semibold"
+                          onClick={() => window.open(task.link, '_blank')}
+                        >
                           Пригласить
                         </Button>
                       </div>

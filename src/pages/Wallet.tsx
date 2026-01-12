@@ -1,12 +1,19 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import { useState } from "react";
+import DepositModal from "@/components/DepositModal";
+import WithdrawModal from "@/components/WithdrawModal";
+import AddCardModal from "@/components/AddCardModal";
 
 const Wallet = () => {
   const availableBalance = 3.49;
   const deposited = 100.0;
   const withdrawn = 0.0;
   const pending = 0.0;
+  const [showDepositModal, setShowDepositModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [showAddCardModal, setShowAddCardModal] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -49,11 +56,17 @@ const Wallet = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <Button className="h-12 bg-white text-primary hover:bg-white/90 font-semibold shadow-lg">
+              <Button 
+                className="h-12 bg-white text-primary hover:bg-white/90 font-semibold shadow-lg"
+                onClick={() => setShowDepositModal(true)}
+              >
                 <Icon name="ArrowUpRight" size={18} className="mr-2" />
                 Пополнить
               </Button>
-              <Button className="h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 font-semibold">
+              <Button 
+                className="h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 font-semibold"
+                onClick={() => setShowWithdrawModal(true)}
+              >
                 <Icon name="ArrowDownLeft" size={18} className="mr-2" />
                 Вывести
               </Button>
@@ -98,6 +111,7 @@ const Wallet = () => {
                 variant="outline" 
                 size="sm"
                 className="mt-3"
+                onClick={() => setShowAddCardModal(true)}
               >
                 <Icon name="Plus" size={16} className="mr-2" />
                 Добавить новый метод
@@ -106,6 +120,14 @@ const Wallet = () => {
           </Card>
         </div>
       </main>
+
+      <DepositModal open={showDepositModal} onClose={() => setShowDepositModal(false)} />
+      <WithdrawModal 
+        open={showWithdrawModal} 
+        onClose={() => setShowWithdrawModal(false)}
+        availableBalance={availableBalance}
+      />
+      <AddCardModal open={showAddCardModal} onClose={() => setShowAddCardModal(false)} />
     </div>
   );
 };

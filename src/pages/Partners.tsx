@@ -131,6 +131,14 @@ const Partners = () => {
           <Button 
             className="w-full h-12 bg-secondary hover:bg-secondary/90 font-semibold"
             size="lg"
+            onClick={() => {
+              const text = `Присоединяйся к Passive Capital и получай пассивный доход!\n${referralLink}`;
+              if (navigator.share) {
+                navigator.share({ title: 'Passive Capital', text });
+              } else {
+                window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent('Присоединяйся к Passive Capital и получай пассивный доход!')}`, '_blank');
+              }
+            }}
           >
             <Icon name="Share2" size={18} className="mr-2" />
             Пригласить друзей

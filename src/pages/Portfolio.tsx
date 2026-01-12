@@ -3,12 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
+import CalculatorModal from "@/components/CalculatorModal";
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState<"active" | "completed">("active");
   const [totalInvested] = useState(100.0);
   const [activeCount] = useState(1);
   const [dailyIncome] = useState(9.6);
+  const [showCalculator, setShowCalculator] = useState(false);
 
   const activeTariff = {
     id: 1,
@@ -68,7 +70,10 @@ const Portfolio = () => {
           </div>
         </Card>
 
-        <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 p-5 space-y-3">
+        <Card 
+          className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 p-5 space-y-3 cursor-pointer hover:border-primary/50 transition-colors"
+          onClick={() => setShowCalculator(true)}
+        >
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-primary/30 flex items-center justify-center">
               <Icon name="Calculator" size={24} className="text-primary" />
@@ -161,6 +166,8 @@ const Portfolio = () => {
           </div>
         )}
       </main>
+
+      <CalculatorModal open={showCalculator} onClose={() => setShowCalculator(false)} />
     </div>
   );
 };

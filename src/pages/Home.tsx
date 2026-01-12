@@ -2,12 +2,14 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import { useState, useEffect } from "react";
+import DepositModal from "@/components/DepositModal";
 
 const Home = () => {
   const [balance, setBalance] = useState(103);
   const [profit24h, setProfit24h] = useState(10);
   const [partners] = useState(0);
   const [withdrawn] = useState(0);
+  const [showDepositModal, setShowDepositModal] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,6 +78,7 @@ const Home = () => {
           <Button 
             className="h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base"
             size="lg"
+            onClick={() => setShowDepositModal(true)}
           >
             <Icon name="ArrowUpRight" size={20} className="mr-2" />
             Пополнить баланс
@@ -85,6 +88,7 @@ const Home = () => {
             className="h-14 bg-card hover:bg-muted border border-border font-semibold text-base"
             variant="outline"
             size="lg"
+            onClick={() => window.open('https://t.me/PassiveCapitalForum', '_blank')}
           >
             <Icon name="MessageCircle" size={20} className="mr-2" />
             Перейти на форум
@@ -114,6 +118,8 @@ const Home = () => {
           </Card>
         </div>
       </main>
+
+      <DepositModal open={showDepositModal} onClose={() => setShowDepositModal(false)} />
     </div>
   );
 };
