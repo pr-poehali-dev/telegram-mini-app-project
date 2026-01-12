@@ -88,7 +88,7 @@ const Home = () => {
             className="h-14 bg-card hover:bg-muted border border-border font-semibold text-base"
             variant="outline"
             size="lg"
-            onClick={() => window.open('https://t.me/PassiveCapitalForum', '_blank')}
+            onClick={() => window.open('https://t.me/pasivInvst', '_blank')}
           >
             <Icon name="MessageCircle" size={20} className="mr-2" />
             Перейти на форум
