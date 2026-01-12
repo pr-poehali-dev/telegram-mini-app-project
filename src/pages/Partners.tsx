@@ -29,7 +29,7 @@ const Partners = () => {
             Закрыть
           </button>
           <div className="text-center">
-            <h1 className="font-semibold text-lg">Passive Capital</h1>
+            <h1 className="font-semibold text-lg">Passive Invest</h1>
             <p className="text-xs text-muted-foreground">мини-приложение</p>
           </div>
           <button className="text-foreground/80 hover:text-foreground transition-colors">
@@ -60,7 +60,7 @@ const Partners = () => {
             
             <h3 className="text-2xl font-bold mb-2">Ваш доход от партнеров</h3>
             <p className="text-sm text-muted-foreground max-w-sm mx-auto">
-              Получайте 25% от каждого депозита ваших рефералов мгновенно на баланс.
+              Получайте 25% от каждого депозита рефералов мгновенно на баланс.
             </p>
           </div>
         </Card>
@@ -132,11 +132,11 @@ const Partners = () => {
             className="w-full h-12 bg-secondary hover:bg-secondary/90 font-semibold"
             size="lg"
             onClick={() => {
-              const text = `Присоединяйся к Passive Capital и получай пассивный доход!\n${referralLink}`;
+              const text = `Присоединяйся к Passive Invest и получай пассивный доход!\n${referralLink}`;
               if (navigator.share) {
-                navigator.share({ title: 'Passive Capital', text });
+                navigator.share({ title: 'Passive Invest', text });
               } else {
-                window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent('Присоединяйся к Passive Capital и получай пассивный доход!')}`, '_blank');
+                window.open(`https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent('Присоединяйся к Passive Invest и получай пассивный доход!')}`, '_blank');
               }
             }}
           >

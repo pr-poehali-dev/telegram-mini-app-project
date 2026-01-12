@@ -31,7 +31,7 @@ const Portfolio = () => {
             Закрыть
           </button>
           <div className="text-center">
-            <h1 className="font-semibold text-lg">Passive Capital</h1>
+            <h1 className="font-semibold text-lg">Passive Invest</h1>
             <p className="text-xs text-muted-foreground">мини-приложение</p>
           </div>
           <button className="text-foreground/80 hover:text-foreground transition-colors">
