@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import DepositModal from "@/components/DepositModal";
 
 const Home = () => {
-  const [balance, setBalance] = useState(103);
-  const [profit24h, setProfit24h] = useState(10);
+  const [balance, setBalance] = useState(0);
+  const [profit24h, setProfit24h] = useState(0);
   const [partners] = useState(0);
   const [withdrawn] = useState(0);
   const [showDepositModal, setShowDepositModal] = useState(false);
@@ -98,24 +98,10 @@ const Home = () => {
         <div className="space-y-3">
           <h3 className="text-lg font-semibold">История операций</h3>
           
-          <Card className="p-4 flex items-center justify-between hover:bg-muted/50 transition-colors">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-success/20 flex items-center justify-center">
-                <Icon name="ArrowUpRight" size={20} className="text-success" />
-              </div>
-              <div>
-                <p className="font-semibold">Пополнение</p>
-                <p className="text-xs text-muted-foreground">Сегодня, 13:03</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="font-semibold text-success">+100 ₽</p>
-              <div className="flex items-center gap-1 text-xs text-success">
-                <Icon name="CheckCircle" size={12} />
-                <span>Успешно</span>
-              </div>
-            </div>
-          </Card>
+          <div className="text-center py-12">
+            <Icon name="History" size={48} className="mx-auto text-muted-foreground mb-3 opacity-50" />
+            <p className="text-muted-foreground">История операций пуста</p>
+          </div>
         </div>
       </main>
 

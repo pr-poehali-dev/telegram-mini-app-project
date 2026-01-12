@@ -7,10 +7,10 @@ import WithdrawModal from "@/components/WithdrawModal";
 import AddCardModal from "@/components/AddCardModal";
 
 const Wallet = () => {
-  const availableBalance = 3.49;
-  const deposited = 100.0;
-  const withdrawn = 0.0;
-  const pending = 0.0;
+  const availableBalance = 0;
+  const deposited = 0;
+  const withdrawn = 0;
+  const pending = 0;
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showAddCardModal, setShowAddCardModal] = useState(false);

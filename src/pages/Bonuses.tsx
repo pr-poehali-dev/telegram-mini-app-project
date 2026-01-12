@@ -3,22 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Icon from "@/components/ui/icon";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const Bonuses = () => {
-  const botLink = "https://t.me/PassiveCapitalBot";
-  const referralLink = "https://t.me/PassiveCapitalBot/play?start=ref123456";
+  const chatLink = "https://t.me/pasivInvst";
+  const referralLink = "https://t.me/passivInvestbot";
 
-  const tasks = [
+  const [tasks, setTasks] = useState([
     {
       id: 1,
       title: "Подписка на чат",
       description: "Вступите в наш официальный чат инвесторов.",
       reward: 100,
-      completed: true,
+      completed: false,
       icon: "Send",
       iconBg: "bg-primary/20",
       iconColor: "text-primary",
-      link: botLink,
+      link: chatLink,
     },
     {
       id: 2,
@@ -33,13 +34,45 @@ const Bonuses = () => {
       iconColor: "text-secondary",
       link: referralLink,
     },
-  ];
+  ]);
 
-  const handleCheck = (taskId: number) => {
+  const [checking, setChecking] = useState<number | null>(null);
+
+  const handleCheck = async (taskId: number) => {
+    setChecking(taskId);
     toast.info("Проверка выполнения задания...");
-    setTimeout(() => {
-      toast.error("Задание еще не выполнено");
-    }, 1500);
+    
+    try {
+      // Получаем telegram_id из Telegram WebApp (для реального использования)
+      const telegramId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id || 123456789;
+      
+      const response = await fetch('https://functions.poehali.dev/8db581d1-2979-4c28-a179-5cdbf6c06bb8', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          telegram_id: telegramId,
+          task_id: taskId
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (data.subscribed) {
+        toast.success(data.message || 'Бонус начислен!');
+        setTasks(prev => prev.map(task => 
+          task.id === taskId ? { ...task, completed: true } : task
+        ));
+      } else {
+        toast.error(data.message || 'Задание еще не выполнено');
+      }
+    } catch (error) {
+      toast.error('Ошибка при проверке задания');
+      console.error(error);
+    } finally {
+      setChecking(null);
+    }
   };
 
   return (
@@ -130,14 +163,22 @@ const Bonuses = () => {
                           variant="outline" 
                           className="h-11"
                           onClick={() => handleCheck(task.id)}
+                          disabled={checking === task.id}
                         >
-                          Проверить
+                          {checking === task.id ? (
+                            <>
+                              <Icon name="Loader2" size={16} className="mr-2 animate-spin" />
+                              Проверка...
+                            </>
+                          ) : (
+                            'Проверить'
+                          )}
                         </Button>
                         <Button 
                           className="h-11 bg-secondary hover:bg-secondary/90 font-semibold"
                           onClick={() => window.open(task.link, '_blank')}
                         >
-                          Пригласить
+                          {task.id === 1 ? 'Подписаться' : 'Пригласить'}
                         </Button>
                       </div>
                     </>

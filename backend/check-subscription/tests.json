@@ -1,0 +1,29 @@
+{
+  "tests": [
+    {
+      "name": "Test subscription check with valid telegram_id",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "telegram_id": 123456789,
+        "task_id": 1
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "subscribed": "boolean"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Test missing telegram_id",
+      "method": "POST",
+      "path": "/",
+      "body": {},
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "telegram_id is required"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

@@ -8,14 +8,14 @@ import AddToDepositModal from "@/components/AddToDepositModal";
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState<"active" | "completed">("active");
-  const [totalInvested] = useState(100.0);
-  const [activeCount] = useState(1);
-  const [dailyIncome] = useState(9.6);
+  const [totalInvested] = useState(0);
+  const [activeCount] = useState(0);
+  const [dailyIncome] = useState(0);
   const [showCalculator, setShowCalculator] = useState(false);
   const [showAddToDeposit, setShowAddToDeposit] = useState(false);
-  const availableBalance = 3.49;
+  const availableBalance = 0;
 
-  const activeTariff = {
+  const activeTariff = activeCount > 0 ? {
     id: 1,
     name: "Тариф 9.60%",
     rate: 9.6,
@@ -24,7 +24,7 @@ const Portfolio = () => {
     endDate: "12.01.2027",
     progress: 0.1,
     nextAccrual: "31 сек",
-  };
+  } : null;
 
   return (
     <div className="min-h-screen bg-background">
@@ -113,58 +113,65 @@ const Portfolio = () => {
         </div>
 
         {activeFilter === "active" ? (
-          <Card className="bg-card border-border p-5 space-y-4 hover:border-primary/50 transition-colors">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
-                  <Icon name="Zap" size={20} className="text-primary" />
+          activeTariff ? (
+            <Card className="bg-card border-border p-5 space-y-4 hover:border-primary/50 transition-colors">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                    <Icon name="Zap" size={20} className="text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-base">{activeTariff.name}</h3>
+                    <p className="text-xs text-muted-foreground">
+                      <Icon name="Clock" size={12} className="inline mr-1" />
+                      До {activeTariff.endDate}
+                    </p>
+                  </div>
                 </div>
+                <div className="px-3 py-1 rounded-full bg-success/20 text-success text-xs font-medium">
+                  В работе
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 py-3 border-y border-border/50">
                 <div>
-                  <h3 className="font-semibold text-base">{activeTariff.name}</h3>
-                  <p className="text-xs text-muted-foreground">
-                    <Icon name="Clock" size={12} className="inline mr-1" />
-                    До {activeTariff.endDate}
+                  <p className="text-xs text-muted-foreground mb-1">Текущая прибыль</p>
+                  <p className="text-lg font-bold text-success tabular-nums">
+                    +{activeTariff.currentProfit.toFixed(2)} ₽
                   </p>
                 </div>
+                <div>
+                  <p className="text-xs text-muted-foreground mb-1">Вклад</p>
+                  <p className="text-lg font-bold tabular-nums">{activeTariff.invested.toFixed(2)} ₽</p>
+                </div>
               </div>
-              <div className="px-3 py-1 rounded-full bg-success/20 text-success text-xs font-medium">
-                В работе
-              </div>
-            </div>
 
-            <div className="grid grid-cols-2 gap-4 py-3 border-y border-border/50">
-              <div>
-                <p className="text-xs text-muted-foreground mb-1">Текущая прибыль</p>
-                <p className="text-lg font-bold text-success tabular-nums">
-                  +{activeTariff.currentProfit.toFixed(2)} ₽
+              <Button 
+                className="w-full h-12 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-semibold"
+                onClick={() => setShowAddToDeposit(true)}
+              >
+                <Icon name="Plus" size={18} className="mr-2" />
+                Добавить к депозиту
+              </Button>
+
+              <div className="space-y-2">
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Прогресс срока</span>
+                  <span className="font-medium">{(activeTariff.progress * 100).toFixed(2)}%</span>
+                </div>
+                <Progress value={activeTariff.progress * 100} className="h-2" />
+                <p className="text-xs text-muted-foreground">
+                  <Icon name="Clock" size={12} className="inline mr-1" />
+                  След. начисление через: {activeTariff.nextAccrual}
                 </p>
               </div>
-              <div>
-                <p className="text-xs text-muted-foreground mb-1">Вклад</p>
-                <p className="text-lg font-bold tabular-nums">{activeTariff.invested.toFixed(2)} ₽</p>
-              </div>
+            </Card>
+          ) : (
+            <div className="text-center py-12">
+              <Icon name="Briefcase" size={48} className="mx-auto text-muted-foreground mb-3 opacity-50" />
+              <p className="text-muted-foreground">Нет активных депозитов</p>
             </div>
-
-            <Button 
-              className="w-full h-12 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-semibold"
-              onClick={() => setShowAddToDeposit(true)}
-            >
-              <Icon name="Plus" size={18} className="mr-2" />
-              Добавить к депозиту
-            </Button>
-
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs">
-                <span className="text-muted-foreground">Прогресс срока</span>
-                <span className="font-medium">{(activeTariff.progress * 100).toFixed(2)}%</span>
-              </div>
-              <Progress value={activeTariff.progress * 100} className="h-2" />
-              <p className="text-xs text-muted-foreground">
-                <Icon name="Clock" size={12} className="inline mr-1" />
-                След. начисление через: {activeTariff.nextAccrual}
-              </p>
-            </div>
-          </Card>
+          )
         ) : (
           <div className="text-center py-12">
             <Icon name="Archive" size={48} className="mx-auto text-muted-foreground mb-3 opacity-50" />
@@ -174,13 +181,15 @@ const Portfolio = () => {
       </main>
 
       <CalculatorModal open={showCalculator} onClose={() => setShowCalculator(false)} />
-      <AddToDepositModal 
-        open={showAddToDeposit} 
-        onClose={() => setShowAddToDeposit(false)}
-        depositId={activeTariff.id}
-        depositName={activeTariff.name}
-        availableBalance={availableBalance}
-      />
+      {activeTariff && (
+        <AddToDepositModal 
+          open={showAddToDeposit} 
+          onClose={() => setShowAddToDeposit(false)}
+          depositId={activeTariff.id}
+          depositName={activeTariff.name}
+          availableBalance={availableBalance}
+        />
+      )}
     </div>
   );
 };
